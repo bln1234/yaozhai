@@ -27,6 +27,11 @@ public class FoxMove : MonoBehaviour
     public Image[] hp; // 生命值
     public Vector3 knockbackDirection; // 击退方向
 
+    public Button btn_J;
+    public Button btn_K;
+    public Button btn_A;
+    public Button btn_D;
+
     private bool isAttacking; // 攻击状态
     private bool iskAttacking; // 跳跃攻击状态
     private bool isDashing; // 冲刺状态
@@ -41,6 +46,11 @@ public class FoxMove : MonoBehaviour
     private bool isFadingOut; // 逐渐变暗
     private bool isHing; // 正在释放H
     private bool isUpHp; // 正在回血
+
+    private bool isbtn_J;
+    private bool isbtn_K;
+    private bool isbtn_A;
+    private bool isbtn_D;
 
     private float HCooldown = 0.5f; //回血冷却时间
     private float dashCooldown = 0.2f; // 冲刺冷却时间
@@ -77,6 +87,15 @@ public class FoxMove : MonoBehaviour
 
     void Start()
     {
+        isbtn_J = false;
+        btn_J.onClick.AddListener(OnAttackButtonClick);
+        isbtn_K = false;
+        btn_K.onClick.AddListener(OnJumpButtonClick);
+        isbtn_A = false;
+        btn_A.onClick.AddListener(OnMoveLButtonClick);
+        isbtn_D = false;
+        btn_D.onClick.AddListener(OnMoveRButtonClick);
+
         ICollider = IEffect.GetComponent<Collider>(); // I的碰撞器
         ICollider.enabled = false;
         FlyswordCollider = flysword.GetComponent<Collider>(); // 飞剑上的碰撞器
@@ -134,7 +153,7 @@ public class FoxMove : MonoBehaviour
             }
         }
         // 地面攻击
-        if (Input.GetKeyDown(KeyCode.J)
+        if ((Input.GetKeyDown(KeyCode.J) || isbtn_J)
             && !isAttacking
             && !iskAttacking
             && !swordThrown
@@ -147,7 +166,7 @@ public class FoxMove : MonoBehaviour
         }
 
         // 空中攻击
-        if (Input.GetKeyDown(KeyCode.J)
+        if ((Input.GetKeyDown(KeyCode.J) || isbtn_J)
             && !iskAttacking
             && !isIing
             && !isUing
@@ -242,7 +261,7 @@ public class FoxMove : MonoBehaviour
             I();
         }
         //跳跃
-        if (Input.GetKeyDown(KeyCode.K)
+        if ((Input.GetKeyDown(KeyCode.K) || isbtn_K)
             && isGround
             && !isHing
             && !isAttacking
@@ -259,8 +278,19 @@ public class FoxMove : MonoBehaviour
             && !isIing
             && !isKnockedBack)
         {
+            Debug.Log(isbtn_A);
+            Debug.Log(isbtn_D);
             // 水平轴
             float horizontal = Input.GetAxis("Horizontal");
+            if(isbtn_A)
+            {
+                horizontal = -1f;
+            }
+            if (isbtn_D)
+            {
+                horizontal = 1f;
+            }
+            Debug.Log(horizontal);
             Vector3 dir = new Vector3(0, 0, horizontal);
 
             if (dir != Vector3.zero)
@@ -329,6 +359,7 @@ public class FoxMove : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         runJEffectCollider.enabled = false;
         isAttacking = false; // 攻击结束，重置状态
+        isbtn_J = false;
         lastAttackTime = Time.time; // 更新上次攻击时间
     }
 
@@ -349,6 +380,7 @@ public class FoxMove : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         KJEffectCollider.enabled = false;
         iskAttacking = false;
+        isbtn_J = false;
         lastAttackTime = Time.time; // 更新上次攻击时间
     }
 
@@ -423,6 +455,7 @@ public class FoxMove : MonoBehaviour
         isGround = false; // 标记角色不在地面
         VerticalV = jumpSpeed;
         animator.SetTrigger("isJump");
+        isbtn_K = false;
     }
     private void CalculateGravity()
     {
@@ -707,5 +740,23 @@ public class FoxMove : MonoBehaviour
         isHing = false;
         animator.SetBool("isHing", false);
 
+    }
+    void OnAttackButtonClick()
+    {
+        isbtn_J = true;
+    }
+    void OnJumpButtonClick()
+    {
+        isbtn_K = true;
+    }
+    void OnMoveLButtonClick()
+    {
+        isbtn_A = true;
+        isbtn_D = false;
+    }
+    void OnMoveRButtonClick()
+    {
+        isbtn_A = false;
+        isbtn_D = true;
     }
 }
