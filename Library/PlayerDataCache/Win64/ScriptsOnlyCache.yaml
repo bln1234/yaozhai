@@ -3,8 +3,9 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - CameraMove
     - FoxMove
-    - MonsterNormal
     - PauseMenu
+    - SlimeBig
+    - SlimeSmall
     Unity.RenderPipelines.Core.Runtime.dll:
     - UnityEngine.Rendering.UI.DebugUIHandlerBitField
     - UnityEngine.Rendering.UI.DebugUIHandlerButton
@@ -189,8 +190,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 4470}
     - Class: 114
-      Script: {instanceID: 4736}
-    - Class: 114
       Script: {instanceID: 4828}
     - Class: 114
       Script: {instanceID: 4992}
@@ -202,6 +201,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 5454}
     - Class: 114
       Script: {instanceID: 5806}
+    - Class: 114
+      Script: {instanceID: 31872}
+    - Class: 114
+      Script: {instanceID: 51094}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -851,12 +854,6 @@ ScriptsOnlyBuild:
     className: SignalTrack
   - hash:
       serializedVersion: 2
-      Hash: 8893d3a3d31b5ef8f506b8225d040553
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: MonsterNormal
-  - hash:
-      serializedVersion: 2
       Hash: aba7b2852ef61d175dd9602e7723d5e5
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -1071,7 +1068,19 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: TouchInputModule
+  - hash:
+      serializedVersion: 2
+      Hash: dd45ac7a35683d8e613a90ca4e97794d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SlimeBig
+  - hash:
+      serializedVersion: 2
+      Hash: a51a240d2e819dee35ca72106875f898
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SlimeSmall
   platform: 19
   scenePathNames:
   - Assets/Scenes/init_part.unity
-  playerPath: "D:/tmy/Desktop/\u65B0\u5EFA\u6587\u4EF6\u5939/YaoZhai.exe"
+  playerPath: "D:/tmy/Desktop/\u5996\u658Bv0.1/YaoZhai.exe"

@@ -56,7 +56,8 @@
     <Compile Include="Assets\FoxMove.cs" />
     <Compile Include="Assets\CameraMove.cs" />
     <Compile Include="Assets\PauseMenu.cs" />
-    <Compile Include="Assets\MonsterNormal.cs" />
+    <Compile Include="Assets\SlimeBig.cs" />
+    <Compile Include="Assets\SlimeSmall.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -280,6 +281,12 @@
     </Reference>
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.9f1c1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.9f1c1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.9f1c1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.9f1c1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>

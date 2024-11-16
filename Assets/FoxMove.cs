@@ -315,8 +315,6 @@ public class FoxMove : MonoBehaviour
 
     private IEnumerator Attack()
     {
-        
-        AttackMp();
         isAttacking = true; // 设置为攻击状态
         animator.SetTrigger("isJ");
         if (runJEffect != null)
@@ -324,9 +322,9 @@ public class FoxMove : MonoBehaviour
             runJEffect.Play();
         }
         // 等待攻击动画完成的时间
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.2f);
         runJEffectCollider.enabled = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
         runJEffectCollider.enabled = false;
         isAttacking = false; // 攻击结束，重置状态
         lastAttackTime = Time.time; // 更新上次攻击时间
@@ -334,7 +332,7 @@ public class FoxMove : MonoBehaviour
 
     private IEnumerator AirAttack()
     {
-        AttackMp();
+        
         iskAttacking = true; // 设置为攻击状态
         
         if (KJEffect != null)
@@ -344,9 +342,9 @@ public class FoxMove : MonoBehaviour
         animator.SetTrigger("iskJ");
         
         // 等待攻击动画完成的时间
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.2f);
         KJEffectCollider.enabled = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
         KJEffectCollider.enabled = false;
         iskAttacking = false;
         lastAttackTime = Time.time; // 更新上次攻击时间
@@ -475,12 +473,8 @@ public class FoxMove : MonoBehaviour
     {
         if(!collision.gameObject.name.Contains("Plane") && (isAttacking || iskAttacking))
         {
-            if (collision.enabled)
-            {
-                collision.enabled = false;
-                StartCoroutine(Attackback((transform.position - collision.transform.position).z));
-                collision.enabled = true;
-            }
+            AttackMp();
+            StartCoroutine(Attackback((transform.position - collision.transform.position).z));
         }
         
     }
