@@ -13,9 +13,9 @@ public class SlimeBig : MonoBehaviour
     public Color hitColor = Color.red; // 碰撞后变成的颜色
 
     public float MaxDistance;
-    private float DashCooldown = 3f; // 冲刺攻击冷却时间
-    private float Cooldown1 = 4f; // 远程攻击冷却时间
-    private float Cooldown2 = 10f; // 召唤冷却时间
+    private float DashCooldown = 2.9f; // 冲刺攻击冷却时间
+    private float Cooldown1 = 4.1f; // 远程攻击冷却时间
+    private float Cooldown2 = 9.9f; // 召唤冷却时间
     private float last2Time; //上次召唤时间
     private float last1Time; //上次远程攻击时间
     private float lastDashTime; //上次跳跃攻击时间
@@ -111,7 +111,7 @@ public class SlimeBig : MonoBehaviour
             }
 
             // 怪物移动
-            if (!isDash && !isDie)
+            if (!isDie)
             {
                 animator.SetBool("isWalk", true);
                 if (fox.transform.position.z - transform.position.z > 0)
@@ -183,14 +183,14 @@ public class SlimeBig : MonoBehaviour
     }
     private IEnumerator Dash()
     {
-
+        
         isDash = true;
         animator.SetTrigger("isDash"); // 播放冲刺动画
-
+        yield return new WaitForSeconds(0.4f);
         Vector3 startPosition = transform.position;
         Vector3 targetPosition = fox.transform.position;
         targetPosition.y = startPosition.y;
-        float dashDuration = 0.5f; // 冲刺所需时间
+        float dashDuration = 0.3f; // 冲刺所需时间
 
         float elapsedTime = 0f;
 
@@ -203,11 +203,11 @@ public class SlimeBig : MonoBehaviour
             yield return null;
         }
         yield return null;
-        isDash = false;
-        lastDashTime = Time.time;
-
         // 确保冲刺结束后回到行走状态
         animator.SetBool("isWalk", true);
+        yield return new WaitForSeconds(0.8f);
+        isDash = false;
+        lastDashTime = Time.time;
     }
     private IEnumerator skill1()
     {
@@ -237,7 +237,7 @@ public class SlimeBig : MonoBehaviour
         // 等待球体存在一段时间后消失
         Destroy(skillBall);
 
-        yield return null;
+        yield return new WaitForSeconds(0.8f);
         is1 = false;
         last1Time = Time.time;
     }
@@ -249,6 +249,7 @@ public class SlimeBig : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Vector3 spawnPosition = transform.position + transform.forward * 2f;  // 正前方2单位的地方
         GameObject smallSlime = Instantiate(SmallSlime, new Vector3(spawnPosition.x, spawnPosition.y, spawnPosition.z), Quaternion.identity);
+        yield return new WaitForSeconds(0.8f);
         is2 = false;
         last2Time = Time.time;
     }

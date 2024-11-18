@@ -130,65 +130,67 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1988}
     - Class: 114
-      Script: {instanceID: 2276}
+      Script: {instanceID: 2058}
     - Class: 114
       Script: {instanceID: 2278}
     - Class: 114
-      Script: {instanceID: 2302}
+      Script: {instanceID: 2280}
     - Class: 114
-      Script: {instanceID: 2596}
+      Script: {instanceID: 2304}
     - Class: 114
-      Script: {instanceID: 2700}
+      Script: {instanceID: 2598}
     - Class: 114
-      Script: {instanceID: 2730}
+      Script: {instanceID: 2702}
     - Class: 114
-      Script: {instanceID: 2872}
+      Script: {instanceID: 2732}
     - Class: 114
-      Script: {instanceID: 3056}
+      Script: {instanceID: 2874}
     - Class: 114
-      Script: {instanceID: 3106}
+      Script: {instanceID: 3058}
     - Class: 114
-      Script: {instanceID: 3222}
+      Script: {instanceID: 3108}
     - Class: 114
-      Script: {instanceID: 3230}
+      Script: {instanceID: 3224}
     - Class: 114
-      Script: {instanceID: 3360}
+      Script: {instanceID: 3232}
     - Class: 114
-      Script: {instanceID: 3426}
+      Script: {instanceID: 3362}
     - Class: 114
-      Script: {instanceID: 3478}
+      Script: {instanceID: 3428}
     - Class: 114
-      Script: {instanceID: 3592}
+      Script: {instanceID: 3480}
     - Class: 114
-      Script: {instanceID: 3604}
+      Script: {instanceID: 3594}
     - Class: 114
-      Script: {instanceID: 3742}
+      Script: {instanceID: 3606}
     - Class: 114
-      Script: {instanceID: 3762}
+      Script: {instanceID: 3744}
     - Class: 114
-      Script: {instanceID: 3850}
+      Script: {instanceID: 3764}
     - Class: 114
-      Script: {instanceID: 3874}
+      Script: {instanceID: 3852}
     - Class: 114
-      Script: {instanceID: 3918}
+      Script: {instanceID: 3876}
     - Class: 114
-      Script: {instanceID: 3958}
+      Script: {instanceID: 3920}
     - Class: 114
-      Script: {instanceID: 3992}
+      Script: {instanceID: 3960}
     - Class: 114
-      Script: {instanceID: 4078}
+      Script: {instanceID: 3994}
     - Class: 114
-      Script: {instanceID: 4082}
+      Script: {instanceID: 4080}
     - Class: 114
-      Script: {instanceID: 4110}
+      Script: {instanceID: 4084}
     - Class: 114
-      Script: {instanceID: 4146}
+      Script: {instanceID: 4112}
     - Class: 114
-      Script: {instanceID: 4250}
+      Script: {instanceID: 4148}
     - Class: 114
-      Script: {instanceID: 4412}
+      Script: {instanceID: 4252}
     - Class: 114
-      Script: {instanceID: 4470}
+      Script: {instanceID: 4414}
+    - Class: 114
+      Script: {instanceID: 4472}
     - Class: 114
       Script: {instanceID: 4828}
     - Class: 114
@@ -196,15 +198,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 5040}
     - Class: 114
-      Script: {instanceID: 5406}
+      Script: {instanceID: 5120}
     - Class: 114
-      Script: {instanceID: 5454}
+      Script: {instanceID: 5408}
     - Class: 114
-      Script: {instanceID: 5806}
+      Script: {instanceID: 5456}
     - Class: 114
-      Script: {instanceID: 31872}
-    - Class: 114
-      Script: {instanceID: 51094}
+      Script: {instanceID: 5808}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -366,6 +366,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Universal.Runtime.dll
     namespaceName: UnityEngine.Rendering.Universal
     className: ChannelMixer
+  - hash:
+      serializedVersion: 2
+      Hash: dd45ac7a35683d8e613a90ca4e97794d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SlimeBig
   - hash:
       serializedVersion: 2
       Hash: 9f0d2156cb2876cc856eb040bfe23e76
@@ -926,6 +932,12 @@ ScriptsOnlyBuild:
     className: ControlPlayableAsset
   - hash:
       serializedVersion: 2
+      Hash: a51a240d2e819dee35ca72106875f898
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SlimeSmall
+  - hash:
+      serializedVersion: 2
       Hash: ef5c43f921427d03730f6ea4c848f07d
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -1068,18 +1080,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: TouchInputModule
-  - hash:
-      serializedVersion: 2
-      Hash: dd45ac7a35683d8e613a90ca4e97794d
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: SlimeBig
-  - hash:
-      serializedVersion: 2
-      Hash: a51a240d2e819dee35ca72106875f898
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: SlimeSmall
   platform: 19
   scenePathNames:
   - Assets/Scenes/init_part.unity
