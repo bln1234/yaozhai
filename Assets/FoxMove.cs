@@ -41,10 +41,11 @@ public class FoxMove : MonoBehaviour
     private bool isFadingOut; // 逐渐变暗
     private bool isHing; // 正在释放H
     private bool isUpHp; // 正在回血
+    private bool isSide; // 靠近空气墙
 
     private float HCooldown = 0.5f; //回血冷却时间
     private float dashCooldown = 0.2f; // 冲刺冷却时间
-    private float AttackCooldown = 0.2f; // 攻击冷却时间
+    private float AttackCooldown = 0.1f; // 攻击冷却时间
     private float UCooldown = 0.5f; // 技能U冷却时间
     private float ICooldown = 0.5f; // 技能I冷却时间
     private float JumpdownCooldown = 0.1f; // 下落状态冷却时间
@@ -90,6 +91,7 @@ public class FoxMove : MonoBehaviour
             materials[i].EnableKeyword("_EMISSION"); // 确保Emission效果启用
         }
         animator = GetComponent<Animator>();
+        isSide = false; // 初始化为未靠近空气墙
         isHing = false; // 初始化为未用H状态
         isUpHp = false; // 初始化为未进行回血
         isFadingOut = false; // 初始化为暗色
@@ -261,6 +263,7 @@ public class FoxMove : MonoBehaviour
         {
             // 水平轴
             float horizontal = Input.GetAxis("Horizontal");
+
             Vector3 dir = new Vector3(0, 0, horizontal);
 
             if (dir != Vector3.zero)
@@ -269,7 +272,14 @@ public class FoxMove : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(dir);
                 animator.SetBool("isWalk", true);
                 // 朝向前方移动
-                transform.Translate(Vector3.forward * 5 * Time.deltaTime);
+                if(isSide == true)
+                {
+                    transform.Translate(Vector3.forward * 1 * Time.deltaTime);
+                }
+                else
+                {
+                    transform.Translate(Vector3.forward * 5 * Time.deltaTime);
+                }
             }
             else
             {
@@ -305,7 +315,15 @@ public class FoxMove : MonoBehaviour
         while (Time.time < dashStartTime + 0.2f)
         {
             VerticalV = 0f; // 空中冲刺时，垂直速度始终为0
-            transform.Translate(Vector3.forward * 20 * Time.deltaTime);
+            if(isSide)
+            {
+                transform.Translate(Vector3.forward * 0 * Time.deltaTime);
+            }
+            else
+            {
+                transform.Translate(Vector3.forward * 20 * Time.deltaTime);
+            }
+            
             yield return null; // 等待下一帧
         }
         isVincible = false;
@@ -322,9 +340,9 @@ public class FoxMove : MonoBehaviour
             runJEffect.Play();
         }
         // 等待攻击动画完成的时间
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         runJEffectCollider.enabled = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.22f);
         runJEffectCollider.enabled = false;
         isAttacking = false; // 攻击结束，重置状态
         lastAttackTime = Time.time; // 更新上次攻击时间
@@ -342,9 +360,9 @@ public class FoxMove : MonoBehaviour
         animator.SetTrigger("iskJ");
         
         // 等待攻击动画完成的时间
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         KJEffectCollider.enabled = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.22f);
         KJEffectCollider.enabled = false;
         iskAttacking = false;
         lastAttackTime = Time.time; // 更新上次攻击时间
@@ -367,19 +385,34 @@ public class FoxMove : MonoBehaviour
     private IEnumerator SwordFlying()
     {
         FlyswordCollider.enabled = true;
-        UEffect2.Play();
+        
         float throwDuration = 1.0f; // 剑飞行时间
         float startTime = Time.time;
         flysword.SetActive(true); // 设置飞剑显示
+        UEffect2.Play();
         Vector3 direction = flysword.transform.forward;
+        RaycastHit hitInfo;
         while (Time.time < startTime + throwDuration)
         {
             if (!swordThrown)
             {
                 break;
             }
-            // 每帧移动剑的位置
-            flysword.transform.position = flysword.transform.position + direction * 15 * Time.deltaTime;
+            // 使用Raycast检测剑的前方是否有碰撞
+            if (Physics.Raycast(flysword.transform.position, direction, out hitInfo, 15 * Time.deltaTime))
+            {
+                // 如果碰到墙或其他物体，停止飞行
+                if (hitInfo.collider.name.Contains("AirWall")) // 假设遇到空气墙
+                {
+                    // 切换速度为0，停止飞剑的移动
+                    flysword.transform.position = flysword.transform.position;
+                }
+            }
+            else
+            {
+                // 每帧移动剑的位置
+                flysword.transform.position = flysword.transform.position + direction * 15 * Time.deltaTime;
+            }
             yield return null;
         }
     }
@@ -471,7 +504,9 @@ public class FoxMove : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
-        if(!collision.gameObject.name.Contains("Plane") && (isAttacking || iskAttacking))
+        if(!collision.gameObject.name.Contains("Plane")
+            && !collision.gameObject.name.Contains("AirWall")
+            && (isAttacking || iskAttacking))
         {
             AttackMp();
             StartCoroutine(Attackback((transform.position - collision.transform.position).z));
@@ -487,12 +522,17 @@ public class FoxMove : MonoBehaviour
             transform.position = new Vector3(transform.position.x, collision.transform.position.y, transform.position.z);
             isGround = true; // 角色接触到地面
         }
+        if(collision.gameObject.name.Contains("AirWall"))
+        {
+            isSide = true;
+        }
     }
     private void OnCollisionStay(Collision collision)
     {
         if (!isKnockedBack
             && !isVincible
-            && !collision.gameObject.name.Contains("Plane"))
+            && !collision.gameObject.name.Contains("Plane")
+            && !collision.gameObject.name.Contains("AirWall"))
         {
             // 执行击退操作
             StartCoroutine(Knockback((transform.position - collision.transform.position).z));
@@ -506,6 +546,10 @@ public class FoxMove : MonoBehaviour
         if (collision.gameObject.name.Contains("Plane"))
         {
             isGround = false; // 角色离开地面
+        }
+        if (collision.gameObject.name.Contains("AirWall"))
+        {
+            isSide = false;
         }
     }
 
@@ -633,13 +677,13 @@ public class FoxMove : MonoBehaviour
         float elapsedTime = 0;
         if (deltaZ > 0)
         {
-            HorizontalA = -15f;
-            HorizontalV = 3f;
+            HorizontalA = -30f;
+            HorizontalV = 6f;
         }
         else
         {
-            HorizontalA = 15f;
-            HorizontalV = -3f;
+            HorizontalA = 30f;
+            HorizontalV = -6f;
         }
         // 每帧将角色向击退方向移动
         while (HorizontalV * deltaZ > 0)
