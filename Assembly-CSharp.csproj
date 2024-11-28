@@ -53,11 +53,14 @@
     <UnityVersion>2020.3.9f1c1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\SlimeBig.cs" />
+    <Compile Include="Assets\AirWall.cs" />
     <Compile Include="Assets\FoxMove.cs" />
+    <Compile Include="Assets\master.cs" />
     <Compile Include="Assets\CameraMove.cs" />
     <Compile Include="Assets\PauseMenu.cs" />
-    <Compile Include="Assets\SlimeBig.cs" />
     <Compile Include="Assets\SlimeSmall.cs" />
+    <Compile Include="Assets\MainMaster.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

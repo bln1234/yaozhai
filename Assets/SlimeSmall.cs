@@ -73,16 +73,19 @@ public class SlimeSmall : MonoBehaviour
             if (!isDash)
             {
                 animator.SetBool("isWalk", true);
-                if (fox.transform.position.z - transform.position.z > 0)
+                if (Time.timeScale != 0f)
                 {
-                    move.z = 0.01f;
+                    if (fox.transform.position.z - transform.position.z > 0)
+                    {
+                        move.z = 0.01f;
+                    }
+                    else
+                    {
+                        move.z = -0.01f;
+                    }
+                    transform.rotation = Quaternion.LookRotation(move);
+                    transform.position += move;
                 }
-                else
-                {
-                    move.z = -0.01f;
-                }
-                transform.rotation = Quaternion.LookRotation(move);
-                transform.position += move;
             }
 
         }

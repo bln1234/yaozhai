@@ -26,6 +26,7 @@ public class CameraMove : MonoBehaviour
     }
     public IEnumerator Shake(float duration, float magnitude)
     {
+        
         Vector3 originalPosition = transform.position;
 
         float elapsed = 0.0f;
@@ -34,11 +35,15 @@ public class CameraMove : MonoBehaviour
         {
             float x = Random.Range(-1f, 1f) * magnitude;
             float y = Random.Range(-1f, 1f) * magnitude;
+            if (Time.timeScale != 0f)
+            {
+                // 更新摄像头位置，保持偏移
+                transform.position = new Vector3(originalPosition.x + x, originalPosition.y + y, transform.position.z);
+                elapsed += Time.deltaTime;
+            }
+                
 
-            // 更新摄像头位置，保持偏移
-            transform.position = new Vector3(originalPosition.x + x, originalPosition.y + y, transform.position.z);
-
-            elapsed += Time.deltaTime;
+            
 
             yield return null;
         }

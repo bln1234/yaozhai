@@ -7,7 +7,8 @@ public class FoxMove : MonoBehaviour
 {
     public Material[] materials; // 角色身上所有材质
     private Animator animator;
-    
+
+    public GameObject DieMenu; // 死亡菜单
     public GameObject sword; // 手上的剑
     public GameObject flysword; // 飞剑
     public GameObject IEffect; // I特效父级
@@ -41,7 +42,7 @@ public class FoxMove : MonoBehaviour
     private bool isFadingOut; // 逐渐变暗
     private bool isHing; // 正在释放H
     private bool isUpHp; // 正在回血
-    private bool isSide; // 靠近空气墙
+    public bool isSide; // 靠近空气墙
 
     private float HCooldown = 0.5f; //回血冷却时间
     private float dashCooldown = 0.2f; // 冲刺冷却时间
@@ -62,8 +63,8 @@ public class FoxMove : MonoBehaviour
     private float HorizontalA; // 水平方向加速度
     private float flashTimer = 0f; // 无敌状态材质切换时间
 
-    private int current_mp; // 现在的魔法值
-    private int current_hp; // 现在的血量
+    public int current_mp; // 现在的魔法值
+    public int current_hp; // 现在的血量
 
     private Coroutine hCoroutine; // 用于存储协程的引用
     private Coroutine HPCoroutine;
@@ -522,10 +523,7 @@ public class FoxMove : MonoBehaviour
             transform.position = new Vector3(transform.position.x, collision.transform.position.y, transform.position.z);
             isGround = true; // 角色接触到地面
         }
-        if(collision.gameObject.name.Contains("AirWall"))
-        {
-            isSide = true;
-        }
+        
     }
     private void OnCollisionStay(Collision collision)
     {
@@ -537,6 +535,10 @@ public class FoxMove : MonoBehaviour
             // 执行击退操作
             StartCoroutine(Knockback((transform.position - collision.transform.position).z));
             Down_Hp();
+        }
+        if (collision.gameObject.name.Contains("AirWall"))
+        {
+            isSide = true;
         }
     }
 
@@ -652,18 +654,25 @@ public class FoxMove : MonoBehaviour
         VerticalV = 5f;
         if(deltaZ >0)
         {
-            HorizontalA = -20f;
+            HorizontalA = -30f;
             HorizontalV = 12.5f;
         }
         else
         {
-            HorizontalA = 20f;
+            HorizontalA = 30f;
             HorizontalV = -12.5f;
         }
         // 每帧将角色向击退方向移动
         while (HorizontalV * deltaZ > 0)
         {
-            HorizontalV += HorizontalA * Time.deltaTime; // 更新水平速度
+            if (isSide == false)
+            {
+                HorizontalV += HorizontalA * Time.deltaTime; // 更新水平速度
+            }
+            else
+            {
+                HorizontalV = 0f;
+            }
             Vector3 move = new Vector3(0, 0, HorizontalV);
             transform.position += move * Time.deltaTime; // 更新位置
             yield return null;
@@ -688,7 +697,14 @@ public class FoxMove : MonoBehaviour
         // 每帧将角色向击退方向移动
         while (HorizontalV * deltaZ > 0)
         {
-            HorizontalV += HorizontalA * Time.deltaTime; // 更新水平速度
+            if(isSide == false)
+            {
+                HorizontalV += HorizontalA * Time.deltaTime; // 更新水平速度
+            }
+            else
+            {
+                HorizontalV = 0f;
+            }
             Vector3 move = new Vector3(0, 0, HorizontalV);
             transform.position += move * Time.deltaTime; // 更新位置
             yield return null;
@@ -721,10 +737,9 @@ public class FoxMove : MonoBehaviour
                 }
                 foreach (var mat in materials)
                 {
-                    Color emissionColor = mat.color * emissionValue; // 以材质的颜色调整亮度
+                    Color emissionColor = Color.white * emissionValue; // 以材质的颜色调整亮度
                     mat.SetColor("_EmissionColor", emissionColor);
                 }
-
                 yield return null;
             }
             i++;
