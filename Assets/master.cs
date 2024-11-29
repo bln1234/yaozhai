@@ -46,10 +46,17 @@ public class master : MonoBehaviour
                 AirWall3.SetActive(false);
             }
         }
-        if(!slime3.activeSelf)
+        if (fox.transform.position.z > AirWall4.transform.position.z)
         {
-            foxMoveScript.isSide = false;
-            AirWall4.SetActive(false);
+            AirWall4.SetActive(true);
+        }
+        else
+        {
+            if (!slime3.activeSelf)
+            {
+                foxMoveScript.isSide = false;
+                AirWall4.SetActive(false);
+            }
         }
     }
 }

@@ -61,6 +61,7 @@
     <Compile Include="Assets\PauseMenu.cs" />
     <Compile Include="Assets\SlimeSmall.cs" />
     <Compile Include="Assets\MainMaster.cs" />
+    <Compile Include="Assets\GlowTree.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
