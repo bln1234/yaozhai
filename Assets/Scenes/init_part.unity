@@ -10948,7 +10948,7 @@ MonoBehaviour:
   MaxDistance: 15
   skillBallSpeed: 20
   ballLifetime: 2
-  HP: 2
+  HP: 25
   DieEffect1: {fileID: 423635836}
   DieEffect2: {fileID: 1167816838}
 --- !u!4 &554960477 stripped

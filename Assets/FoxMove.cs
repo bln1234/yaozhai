@@ -48,7 +48,7 @@ public class FoxMove : MonoBehaviour
     private float dashCooldown = 0.2f; // 冲刺冷却时间
     private float AttackCooldown = 0.1f; // 攻击冷却时间
     private float UCooldown = 0.5f; // 技能U冷却时间
-    private float ICooldown = 0.5f; // 技能I冷却时间
+    private float ICooldown = 2f; // 技能I冷却时间
     private float JumpdownCooldown = 0.1f; // 下落状态冷却时间
     private float lastHTime; //上次回血时间
     private float lastDashTime; // 上次冲刺时间
@@ -327,9 +327,11 @@ public class FoxMove : MonoBehaviour
             
             yield return null; // 等待下一帧
         }
-        isVincible = false;
         isDashing = false; // 冲刺结束，重置状态
         lastDashTime = Time.time; // 更新上次冲刺时间
+        yield return new WaitForSeconds(0.3f);
+        isVincible = false;
+        
     }
 
     private IEnumerator Attack()
@@ -443,8 +445,8 @@ public class FoxMove : MonoBehaviour
 
     private void I()
     {
-        UseMp();
         isVincible = true;
+        UseMp();
         isIing = true;
         animator.SetTrigger("isI"); // 播放I技能动画
         VerticalV = -10f;
@@ -507,6 +509,8 @@ public class FoxMove : MonoBehaviour
     {
         if(!collision.gameObject.name.Contains("Plane")
             && !collision.gameObject.name.Contains("AirWall")
+            && !collision.gameObject.name.Contains("IEffect")
+            && !collision.gameObject.name.Contains("镜子")
             && (isAttacking || iskAttacking))
         {
             AttackMp();
@@ -523,7 +527,7 @@ public class FoxMove : MonoBehaviour
             transform.position = new Vector3(transform.position.x, collision.transform.position.y, transform.position.z);
             isGround = true; // 角色接触到地面
         }
-        
+
     }
     private void OnCollisionStay(Collision collision)
     {
@@ -558,9 +562,10 @@ public class FoxMove : MonoBehaviour
     private IEnumerator ResetIEffectParent()
     {
         // 等待特效持续的时间
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.5f);
         isVincible = false;
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.5f);
+        
         // 将特效设置回原来的父级
         ICollider.enabled = false;
         IEffect.transform.SetParent(transform);
@@ -693,6 +698,11 @@ public class FoxMove : MonoBehaviour
         {
             HorizontalA = 30f;
             HorizontalV = -6f;
+        }
+        if(!isGround)
+        {
+            VerticalV = 10f;
+            HorizontalV = 0f;
         }
         // 每帧将角色向击退方向移动
         while (HorizontalV * deltaZ > 0)
