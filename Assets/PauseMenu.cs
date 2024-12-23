@@ -28,10 +28,10 @@ public class PauseMenu : MonoBehaviour
         RaycastHit hitInfo;
         Ray ray = new Ray(fox.transform.position, fox.transform.forward); // 从角色位置发射，方向是角色前方
 
-        if (Physics.Raycast(ray, out hitInfo, 1f)) // 如果射线碰到物体
+        if (Physics.Raycast(ray, out hitInfo, 3f)) // 如果射线碰到物体
         {
             // 检查射线碰撞到的物体是否是过关光
-            if (hitInfo.collider.name.Contains("通关")) // 假设通关光的标签为"PassLight"
+            if (hitInfo.collider.name.Contains("通关"))
             {
                 // 显示通关菜单
                 PassMenu.SetActive(true);

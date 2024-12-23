@@ -7,9 +7,11 @@ public class MainMaster : MonoBehaviour
 {
     public GameObject PassMenu;
     public GameObject InitMenu;
+    public GameObject SetMenu;
     // Start is called before the first frame update
     void Start()
     {
+        SetMenu.SetActive(false);
         PassMenu.SetActive(false); 
         InitMenu.SetActive(true);
     }
@@ -17,7 +19,10 @@ public class MainMaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Back();
+        }
     }
     public void Load1()
     {
@@ -36,5 +41,16 @@ public class MainMaster : MonoBehaviour
     {
         PassMenu.SetActive(true);
         InitMenu.SetActive(false);
+    }
+    public void GameSet()
+    {
+        SetMenu.SetActive(true);
+        InitMenu.SetActive(false);
+    }
+    public void Back()
+    {
+        SetMenu.SetActive(false);
+        PassMenu.SetActive(false);
+        InitMenu.SetActive(true);
     }
 }

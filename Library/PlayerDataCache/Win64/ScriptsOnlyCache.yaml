@@ -10,6 +10,7 @@ ScriptsOnlyBuild:
     - GlowTree
     - MainMaster
     - Mirror
+    - MyBtnSetting
     - PauseMenu
     - SlimeBig
     - SlimeSmall
@@ -194,6 +195,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
@@ -282,6 +285,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 5474}
     - Class: 114
       Script: {instanceID: 5826}
+    - Class: 114
+      Script: {instanceID: 19720}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -634,7 +639,7 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: 48380fdf4319ed70b441cb80ffdd96ef
+      Hash: 317034229eb121adc3f6770d372e7b35
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BossFox
@@ -898,7 +903,7 @@ ScriptsOnlyBuild:
     className: TextContainer
   - hash:
       serializedVersion: 2
-      Hash: 416646fa018c5c7605b809f8c9d4b844
+      Hash: d0d5c41c65e87b97a62cc64fef1ea44a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: FoxMove
@@ -1084,7 +1089,7 @@ ScriptsOnlyBuild:
     className: Mask
   - hash:
       serializedVersion: 2
-      Hash: a3b165e3f2ceee1d7fa86216b5e10718
+      Hash: 179872dee740c279c90fad6e2eb47c8d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Mirror
@@ -1180,7 +1185,7 @@ ScriptsOnlyBuild:
     className: TMP_Settings
   - hash:
       serializedVersion: 2
-      Hash: e44fee9bd5c62f6caaa763b9d9018242
+      Hash: 22998461c9748b9b1848ba9d3f6e3e63
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MainMaster
@@ -1316,6 +1321,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: TouchInputModule
+  - hash:
+      serializedVersion: 2
+      Hash: 10c25c847e2a50f0b29a6ecfab19f3bc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MyBtnSetting
   platform: 19
   scenePathNames:
   - Assets/Scenes/main.unity

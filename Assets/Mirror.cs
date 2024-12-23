@@ -8,6 +8,8 @@ public class Mirror : MonoBehaviour
     public Image MirrorFox;
     public GameObject Fox;
     public GameObject FoxBoss;
+    public GameObject mirror;
+
     public float flickerSpeed = 1f;  // 闪烁速度
     private float startAlpha;  // 初始透明度
 
@@ -15,6 +17,7 @@ public class Mirror : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         MirrorFox.enabled = false;
         startAlpha = MirrorFox.color.a;
     }
@@ -28,6 +31,11 @@ public class Mirror : MonoBehaviour
             {
                 StartCoroutine(Show());
             }
+        }
+        if(!FoxBoss.activeSelf)
+        {
+            mirror.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
     private IEnumerator Show()
@@ -52,6 +60,8 @@ public class Mirror : MonoBehaviour
         }
         MirrorFox.enabled = false;
         FoxBoss.transform.position = new Vector3(FoxBoss.transform.position.x, FoxBoss.transform.position.y, transform.position.z - 2f);
+        mirror.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 21f);
+        mirror.transform.rotation = Quaternion.Euler(0, 90, 0);
 
     }
 }

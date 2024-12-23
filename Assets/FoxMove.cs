@@ -2,11 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+
+[System.Serializable]
+public class KeyBindings
+{
+    public string Jump;
+    public string Attack;
+    public string Skill1;
+    public string Skill2;
+    public string Blood;
+    public string Dash;
+
+    // 获取键值
+    public string GetKey(string action)
+    {
+        return GetType().GetField(action)?.GetValue(this)?.ToString();
+    }
+    // 检查是否包含某键
+    public bool ContainsKey(string action)
+    {
+        return GetType().GetField(action) != null;
+    }
+}
 
 public class FoxMove : MonoBehaviour
 {
     public Material[] materials; // 角色身上所有材质
     private Animator animator;
+
+    private KeyBindings keyBindings;
+    public string configFileName = "keybindings.json";
 
     public GameObject DieMenu; // 死亡菜单
     public GameObject sword; // 手上的剑
@@ -79,6 +105,19 @@ public class FoxMove : MonoBehaviour
 
     void Start()
     {
+
+        string path = Path.Combine(Application.streamingAssetsPath, configFileName);
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            keyBindings = JsonUtility.FromJson<KeyBindings>(json);
+            Debug.Log(json);
+        }
+        else
+        {
+            Debug.LogError("Key bindings file not found: " + path);
+        }
+
         ICollider = IEffect.GetComponent<Collider>(); // I的碰撞器
         ICollider.enabled = false;
         FlyswordCollider = flysword.GetComponent<Collider>(); // 飞剑上的碰撞器
@@ -137,7 +176,7 @@ public class FoxMove : MonoBehaviour
             }
         }
         // 地面攻击
-        if (Input.GetKeyDown(KeyCode.J)
+        if (Input.GetKeyDown(GetKey("Attack"))
             && !isAttacking
             && !iskAttacking
             && !swordThrown
@@ -150,7 +189,7 @@ public class FoxMove : MonoBehaviour
         }
 
         // 空中攻击
-        if (Input.GetKeyDown(KeyCode.J)
+        if (Input.GetKeyDown(GetKey("Attack"))
             && !iskAttacking
             && !isIing
             && !isUing
@@ -164,7 +203,7 @@ public class FoxMove : MonoBehaviour
             StartCoroutine(AirAttack()); // 空中攻击
         }
         // 空格冲刺
-        if (Input.GetKeyDown(KeyCode.Space)
+        if (Input.GetKeyDown(GetKey("Dash"))
             && !swordThrown
             && !isAttacking
             && !iskAttacking
@@ -176,7 +215,7 @@ public class FoxMove : MonoBehaviour
             StartCoroutine(Dash());
         }
         //H回血
-        if(Input.GetKey(KeyCode.H)
+        if(Input.GetKey(GetKey("Blood"))
             && !isAttacking
             && isGround
             && !isIing
@@ -213,7 +252,7 @@ public class FoxMove : MonoBehaviour
             }
         }
         // U
-        if (Input.GetKeyDown(KeyCode.U)
+        if (Input.GetKeyDown(GetKey("Skill1"))
             && !isAttacking
             && !isDashing
             && !iskAttacking
@@ -232,7 +271,7 @@ public class FoxMove : MonoBehaviour
             }
         }
         //技能I
-        if (Input.GetKeyDown(KeyCode.I)
+        if (Input.GetKeyDown(GetKey("Skill2"))
             && !isDashing
             && current_mp != 0
             && !isAttacking
@@ -245,7 +284,7 @@ public class FoxMove : MonoBehaviour
             I();
         }
         //跳跃
-        if (Input.GetKeyDown(KeyCode.K)
+        if (Input.GetKeyDown(GetKey("Jump"))
             && isGround
             && !isHing
             && !isAttacking
@@ -770,5 +809,14 @@ public class FoxMove : MonoBehaviour
         isHing = false;
         animator.SetBool("isHing", false);
 
+    }
+    // 获取键码
+    public KeyCode GetKey(string action)
+    {
+        if (keyBindings != null && keyBindings.ContainsKey(action))
+        {
+            return (KeyCode)System.Enum.Parse(typeof(KeyCode), keyBindings.GetKey(action));
+        }
+        return KeyCode.None; // 默认返回 None
     }
 }

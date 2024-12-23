@@ -10,12 +10,12 @@ public class BossFox : MonoBehaviour
     private List<Material[]> originalMaterials; // 保存每个子物体的材质数组
     private List<Color[]> originalColors; // 保存每个材质的原始颜色
     public Color hitColor = Color.red; // 碰撞后变成的颜色
-    public ParticleSystem runJEffect; // runJ剑光攻击特效
+    public GameObject runJEffect; // runJ剑光攻击特效
 
     public float HP = 15f;
     public float MaxDistance;
 
-    private float RunJCooldown = 7f; // 冲刺攻击冷却时间
+    private float RunJCooldown = 1f; // 冲刺攻击冷却时间
     private float U1Cooldown = 3f; // U1冷却时间
     private float U2Cooldown = 13f; // U2冷却时间
     private float ICooldown = 17f; // I冷却时间
@@ -41,8 +41,6 @@ public class BossFox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        runJEffectCollider = runJEffect.GetComponent<Collider>(); // runJ特效上的碰撞器
-        runJEffectCollider.enabled = false;
         isBlock = false;
         isRunJ = false;
         iswalk = false;
@@ -252,11 +250,11 @@ public class BossFox : MonoBehaviour
             yield return null;
         }
         animator.SetTrigger("isRunJ");
-        runJEffect.Play();
-        yield return new WaitForSeconds(0.1f);
-        runJEffectCollider.enabled = true;
-        yield return new WaitForSeconds(0.22f);
-        runJEffectCollider.enabled = false;
+        GameObject RunJObject = Instantiate(runJEffect, new Vector3(transform.position.x, transform.position.y + 0.86f, transform.position.z), Quaternion.identity);
+        RunJObject.transform.parent = transform;
+        RunJObject.transform.localRotation = Quaternion.Euler(-90, 0, 0);
+        yield return new WaitForSeconds(0.32f);
+        RunJObject.SetActive(false);
         yield return null;
         yield return new WaitForSeconds(0.4f);
         animator.SetBool("isStand", true);
