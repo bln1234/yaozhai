@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class master : MonoBehaviour
 {
@@ -58,5 +59,9 @@ public class master : MonoBehaviour
                 AirWall4.SetActive(false);
             }
         }
+    }
+    public void Load()
+    {
+        SceneManager.LoadScene("second_part", LoadSceneMode.Single);
     }
 }

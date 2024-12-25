@@ -32,6 +32,10 @@ public class MainMaster : MonoBehaviour
     {
         SceneManager.LoadScene("second_part", LoadSceneMode.Single);
     }
+    public void Load3()
+    {
+        SceneManager.LoadScene("third_part", LoadSceneMode.Single);
+    }
     public void ExitGame()
     {
         // ÍË³öÓÎÏ·

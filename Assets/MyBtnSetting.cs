@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class MyBtnSetting : MonoBehaviour, IPointerExitHandler, IPointerClickHandler
 {
     public string configFileName = "keybindings.json"; // JSON 文件名
-    public string action; // 要修改的动作名称（如 Jump, Attack 等）
+    public string action; // 要修改的动作名称
     private bool _isFixing; // 是否正在修改键位
     private KeyBindings keyBindings; // 键位映射类
     private string jsonFilePath; // JSON 文件路径
@@ -28,7 +28,6 @@ public class MyBtnSetting : MonoBehaviour, IPointerExitHandler, IPointerClickHan
         else
         {
             keyBindings = new KeyBindings(); // 初始化默认值
-            Debug.LogWarning("Keybindings file not found! Using default values.");
         }
 
         // 初始化 Text 文本和原始颜色
@@ -38,10 +37,6 @@ public class MyBtnSetting : MonoBehaviour, IPointerExitHandler, IPointerClickHan
 
             // 保存原始颜色
             originalColor = text.color;
-        }
-        else
-        {
-            Debug.LogWarning($"Action '{action}' not found in keybindings or Text component is missing.");
         }
     }
 
@@ -72,12 +67,6 @@ public class MyBtnSetting : MonoBehaviour, IPointerExitHandler, IPointerClickHan
 
                             // 退出修改模式
                             _isFixing = false;
-
-                            Debug.Log($"{action} key updated to: {keyCode}");
-                        }
-                        else
-                        {
-                            Debug.LogWarning($"Action '{action}' not found in keybindings.");
                         }
 
                         break;
@@ -119,7 +108,5 @@ public class MyBtnSetting : MonoBehaviour, IPointerExitHandler, IPointerClickHan
 
         // 写入 JSON 文件
         File.WriteAllText(jsonFilePath, jsonData);
-
-        Debug.Log("Keybindings saved successfully.");
     }
 }

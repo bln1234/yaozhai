@@ -66,8 +66,9 @@
     <Compile Include="Assets\Mirror.cs" />
     <Compile Include="Assets\SlimeSmall.cs" />
     <Compile Include="Assets\MainMaster.cs" />
-    <Compile Include="Assets\GlowMushroom.cs" />
     <Compile Include="Assets\MyBtnSetting.cs" />
+    <Compile Include="Assets\GlowMushroom.cs" />
+    <Compile Include="Assets\CheckPointSetting.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
