@@ -60,8 +60,12 @@ public class master : MonoBehaviour
             }
         }
     }
-    public void Load()
+    public void Load2()
     {
         SceneManager.LoadScene("second_part", LoadSceneMode.Single);
+    }
+    public void Load3()
+    {
+        SceneManager.LoadScene("third_part", LoadSceneMode.Single);
     }
 }

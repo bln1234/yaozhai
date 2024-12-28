@@ -553,7 +553,7 @@ public class FoxMove : MonoBehaviour
             && (isAttacking || iskAttacking))
         {
             AttackMp();
-            StartCoroutine(Attackback((transform.position - collision.transform.position).z));
+            StartCoroutine(Attackback((transform.position - collision.transform.position).z, (transform.position - collision.transform.position).y));
         }
         
     }
@@ -562,9 +562,16 @@ public class FoxMove : MonoBehaviour
     {
         if (collision.gameObject.name.Contains("Plane"))
         {
-            VerticalV = 0;
-            transform.position = new Vector3(transform.position.x, collision.transform.position.y, transform.position.z);
-            isGround = true; // 角色接触到地面
+            if(collision.transform.position.y <= transform.position.y)
+            {
+                VerticalV = 0;
+                //transform.position = new Vector3(transform.position.x, collision.transform.position.y, transform.position.z);
+                isGround = true; // 角色接触到地面
+            }
+            else
+            {
+                VerticalV = 0f;
+            }
         }
 
     }
@@ -724,7 +731,7 @@ public class FoxMove : MonoBehaviour
         isKnockedBack = false;
     }
     //攻击击退自己
-    private IEnumerator Attackback(float deltaZ)
+    private IEnumerator Attackback(float deltaZ,float deltaY)
     {
         Vector3 direction = new Vector3(0f, 0f, deltaZ);
         float elapsedTime = 0;
@@ -738,7 +745,7 @@ public class FoxMove : MonoBehaviour
             HorizontalA = 30f;
             HorizontalV = -6f;
         }
-        if(!isGround)
+        if(!isGround && deltaY > 0f)
         {
             VerticalV = 10f;
             HorizontalV = 0f;
@@ -818,5 +825,10 @@ public class FoxMove : MonoBehaviour
             return (KeyCode)System.Enum.Parse(typeof(KeyCode), keyBindings.GetKey(action));
         }
         return KeyCode.None; // 默认返回 None
+    }
+    // 获取是否在地面上
+    public bool IsGround()
+    {
+        return isGround;
     }
 }

@@ -54,21 +54,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\SlimeBig.cs" />
+    <Compile Include="Assets\master3.cs" />
     <Compile Include="Assets\GlowTree.cs" />
     <Compile Include="Assets\BossFox.cs" />
     <Compile Include="Assets\BossFoxIEffect.cs" />
+    <Compile Include="Assets\Plane.cs" />
+    <Compile Include="Assets\Bird.cs" />
     <Compile Include="Assets\Sword.cs" />
+    <Compile Include="Assets\CheckPointSetting.cs" />
     <Compile Include="Assets\AirWall.cs" />
     <Compile Include="Assets\FoxMove.cs" />
     <Compile Include="Assets\master.cs" />
     <Compile Include="Assets\CameraMove.cs" />
     <Compile Include="Assets\PauseMenu.cs" />
     <Compile Include="Assets\Mirror.cs" />
+    <Compile Include="Assets\feather.cs" />
     <Compile Include="Assets\SlimeSmall.cs" />
     <Compile Include="Assets\MainMaster.cs" />
     <Compile Include="Assets\MyBtnSetting.cs" />
     <Compile Include="Assets\GlowMushroom.cs" />
-    <Compile Include="Assets\CheckPointSetting.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

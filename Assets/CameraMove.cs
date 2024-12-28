@@ -5,7 +5,9 @@ using UnityEngine;
 public class CameraMove : MonoBehaviour
 {
     public GameObject fox;
+    public bool air;
     public float MaxDistance;
+    public float MaxDistanceY;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,15 +17,36 @@ public class CameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(fox.transform.position.z - transform.position.z > MaxDistance) 
+        // 使用一个中间变量保存新位置
+        Vector3 newPosition = transform.position;
+        
+        // Z轴逻辑
+        if (fox.transform.position.z - transform.position.z > MaxDistance)
         {
-            transform.position =new Vector3(transform.position.x,transform.position.y, fox.transform.position.z - MaxDistance);
+            newPosition.z = fox.transform.position.z - MaxDistance;
         }
-        else if(transform.position.z - fox.transform.position.z > MaxDistance)
+        else if (transform.position.z - fox.transform.position.z > MaxDistance)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, fox.transform.position.z + MaxDistance);
+            newPosition.z = fox.transform.position.z + MaxDistance;
         }
+        if(air)
+        {
+            // Y轴逻辑
+            if (fox.transform.position.y - transform.position.y > MaxDistanceY)
+            {
+                newPosition.y += MaxDistanceY;
+            }
+            else if (transform.position.y - fox.transform.position.y > MaxDistanceY)
+            {
+                newPosition.y -= MaxDistanceY;
+            }
+        }
+        
+
+        // 更新摄像头位置
+        transform.position = newPosition;
     }
+
     public IEnumerator Shake(float duration, float magnitude)
     {
         
@@ -41,10 +64,6 @@ public class CameraMove : MonoBehaviour
                 transform.position = new Vector3(originalPosition.x + x, originalPosition.y + y, transform.position.z);
                 elapsed += Time.deltaTime;
             }
-                
-
-            
-
             yield return null;
         }
 
