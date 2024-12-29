@@ -6,6 +6,8 @@ public class CameraMove : MonoBehaviour
 {
     public GameObject fox;
     public bool air;
+    public float finY;
+    public float finZ;
     public float MaxDistance;
     public float MaxDistanceY;
     // Start is called before the first frame update
@@ -31,14 +33,20 @@ public class CameraMove : MonoBehaviour
         }
         if(air)
         {
-            // YÖáÂß¼­
-            if (fox.transform.position.y - transform.position.y > MaxDistanceY)
+            if (fox.transform.position.y < 17f)
             {
-                newPosition.y += MaxDistanceY;
+                if (fox.transform.position.y - transform.position.y > MaxDistanceY)
+                {
+                    newPosition.y += MaxDistanceY;
+                }
+                else if (transform.position.y - fox.transform.position.y > MaxDistanceY)
+                {
+                    newPosition.y -= MaxDistanceY;
+                }
             }
-            else if (transform.position.y - fox.transform.position.y > MaxDistanceY)
+            else
             {
-                newPosition.y -= MaxDistanceY;
+                newPosition = new Vector3(transform.position.x, finY, finZ);
             }
         }
         

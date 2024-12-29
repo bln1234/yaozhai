@@ -553,7 +553,7 @@ public class FoxMove : MonoBehaviour
             && (isAttacking || iskAttacking))
         {
             AttackMp();
-            StartCoroutine(Attackback((transform.position - collision.transform.position).z, (transform.position - collision.transform.position).y));
+            StartCoroutine(Attackback((transform.position - collision.transform.position).z, transform.position.y - collision.bounds.center.y - collision.bounds.size.y/2));
         }
         
     }

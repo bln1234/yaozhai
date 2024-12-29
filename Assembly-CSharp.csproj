@@ -73,6 +73,8 @@
     <Compile Include="Assets\MainMaster.cs" />
     <Compile Include="Assets\MyBtnSetting.cs" />
     <Compile Include="Assets\GlowMushroom.cs" />
+    <Compile Include="Assets\Bird3.cs" />
+    <Compile Include="Assets\bird2.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
